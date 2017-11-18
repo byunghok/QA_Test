@@ -1,50 +1,56 @@
-MAUM 플랫폼
+# The MAUM Platform
 
-개요
+## Overview
 
-대화 서비스 플랫폼
-대화 서비스 개발 플랫폼
-설치 유형 : AWS 또는 푸른 하늘의 구내 또는 SaaS.
-개발 환경
+- Dialog Service Platform
+- Dialog Service Development Platform
+- Installation type: On-Premise or SaaS on AWS or azure.
 
-섬기는 사람
-C ++
-프로토콜들
-grpc 기반 인터페이스
-관리 콘솔 웹
-각도 2
-앵귤러 2 재질
-관리 콘솔 나머지
-nodejs 6.10 이상
-grpc 노드
-루프백 3
-웹 프록시 서버
-nginx 1.11 이상
-웹
-websocket을 사용하는 nodejs
-짓다
+## Development Environment
+- server
+   - C++
+- protocols
+   - grpc based interface
+- admin console web
+   - angular 2
+   - angular 2 material
+- admin console rest
+   - nodejs 6.10 or later
+   - grpc node
+   - [loopback](http://loopback.io/) 3
+- web proxy server
+   - nginx 1.11 or later
+- web had
+   - nodejs with websocket
 
-개요
+## Build
 
-CMake (2.8.12), 3.1 이상이 더 나은 선택입니다.
-완전 지원을위한 GCC 4.8.2 c ++ - 11, 문제점 # 18, 18보기
-위의 nodejs 6.10.0
-점검
+### Overview
 
-git clone git@github.com : mindslab-ai / maum.git
-외부 의존성
+- CMake (2.8.12) above, 3.1 or later is better choice.
+- GCC 4.8.2 for full support c++-11, SEE issue #18, [18](https://github.com/mindslab-ai/minds-va/issues/18)
+- nodejs 6.10.0 above
 
-빌드 시간 종속성 만 보여줍니다. 모든 필수 패키지는에 의해 설치됩니다 prerequisite.sh.
+### Checkout
 
-다음 패키지 종속성은이 프로젝트 관점만을 보여줍니다. 다음 명령을 직접 사용하지 마십시오.
+```bash
+git clone git@github.com:mindslab-ai/maum.git
+```
 
-우분투 외부 의존성
+### External Dependencies
+It shows build time dependencies only.
+All prerequisite packages are installed by `prerequisite.sh`.
 
+The following package dependencies show this project perspectives only.
+Do not use the following command directly.
+
+##### Ubuntu External Dependencies
+```bash
 sudo apt-get install -y \
-  gcc-4.8g ++ - 4.8g ++ \
+  gcc-4.8 g++-4.8 g++ \
   make cmake \
   autoconf automake libtool \
-  파이썬 - 파이썬 파이썬 - dev에 \
+  python-pip python-dev \
   openmpi-common \
   libboost-all-dev \
   libcurl4-openssl-dev \
@@ -54,25 +60,27 @@ sudo apt-get install -y \
   libarchive13 libarchive-dev \
   libatlas-base-dev libatlas-dev \
   docker.io \
-  압축을 풀다
+  unzip \
   nginx \
   ffmpeg
 sudo ldconfig
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
-CentOS 또는 REDHAT 외부 의존성
+```
 
+##### CentOS or REDHAT External Dependencies
+```bash
 sudo yum -y install epel-release
-sudo yum -y groupinstall ' 개발 도구 '
+sudo yum -y groupinstall 'Development Tools'
 sudo yum -y install \
-  gcc gcc-c ++ \
+  gcc gcc-c++ \
   autoconf automake libtool make \
   cmake cmake3 \
   glibc-devel.x86_64 \
   java-1.8.0-openjdk-devel.x86_64 \
   python-devel.x86_64 \
   flex-devel..x86_64 \
-  부스트 - devel.x86_64 \
+  boost-devel.x86_64 \
   libcurl-devel.x86_64 \
   sqlite-devel.x86_64 \
   mysql-community-devel.x86_64 \
@@ -84,158 +92,205 @@ sudo yum -y install \
   httpd nginx \
   policycoreutils-python
 
-## TODO (정 호킴) 도커 설치
+## TODO (jeongho-kim) docker install
 
-# PIP 및 패키지 설치 
-컬을 " https://bootstrap.pypa.io/get-pip.py " -o " get-pip.py "
+# install pip & package
+curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 sudo python get-pip.py
 rm get-pip.py
-# npm 
-curl - silent --location https://rpm.nodesource.com/setup_6.x | sudo bash -
+# npm
+curl --silent --location https://rpm.nodesource.com/setup_6.x | sudo bash -
 sudo yum install -y nodejs
-외부 파이썬 패키지
 
+```
+
+#### External Python Packages
+
+```bash
 sudo pip install --upgrade pip
-sudo pip install - upgrade virtualenv
-sudo pip install boto3 grpcio == 1.0.1 요청 numpy theano gensim
-외부 노드 패키지
+sudo pip install --upgrade virtualenv
+sudo pip install boto3 grpcio==1.0.1 requests numpy theano gensim
+```
 
-sudo npm install -g @ angular / cli @ 1.0.0
-내부 의존성
+#### External Node Packages
+```bash
+sudo npm install -g @angular/cli@1.0.0
+```
 
-다음 의존성은 서브 모듈에 의해 관리됩니다. (참조 git submodule)
+### Internal Dependencies
+The following dependencies are managed by submodules. (See `git submodule`)
+- libminds
+  - protobuf 3.2
+  - grpc 1.1.3
+- minds-stt
+- minds-ta
+- hazelcast-cpp-client
+- (cassandra) cpp-driver
 
-libminds
-protobuf 3.2
-grpc 1.1.3
-마음가짐
-마음 - 따
-hazelcast-cpp-client
-(카산드라) cpp-driver
-위의 protobuf, grpc, hazelcast-cpp-client, cassandra-cpp-driver는 OS 패키지 시스템으로 아직 관리되지 않습니다. git 서브 모듈을 통해 로컬에서 관리합니다.
+Above protobuf, grpc, hazelcast-cpp-client, cassandra-cpp-driver is not
+managed by OS package system not yet. We manage it locally via git submodule.
 
-사용하는 방법 build.sh
+### How to use `build.sh`
+- All sub build tasks.
+  - libminds: protobuf, libminds, grpc 
+  - libdb: hazelcast-cpp-client, cassadra-cpp-driver 
+  - stt: minds-stt
+  - ta: minds-ta
+  - maum: maum servers, web-console, web-rest
+    - web-had is not build automatically.
+- Build Mode
+  - It build required tasks.
+  - It install all built outputs to target directory.
+    Default target directory is `~/minds`.
+  - It install all required resources to target directory.
+  ```bash
+  ./build.sh ~/minds all
+  ./build.sh ~/minds maum
+  ./build.sh ~/minds libminds stt
+  ```
+- Deploy Mode
+  - It create an temporary directory for deploy build.
+  - It build required packages.
+  - It install all binaries and resources except stt, ta resources.
+  - It generates `.tar.gz` file to `out` directory at source root.
+  ```bash
+  ./build.sh tar
+  ./build.sh tar ta-only
+  ./build.sh tar stt-only
+  ```
+- Other commnads
+  ```bash
+  ./build.sh clean-deploy
+  ./build.sh clean-cache
+  ```
+#### Internal build.sh
+- ~/.minds-build
+  - `cache`: This directory has several prebuilt results.
+     It caches previous external build output for protobuf, grpc,
+     hazelcast-cpp-client, cassandra-cpp-driver by compiler version.
+  - `*.done`: If a prerequisite.sh successfully install all depencencies,
+     this files are generated with given sha1 hash for its script.
+- `build-debug`: `cmake` create this directory for develop mode.
+- `build-deploy-debug`: `cmake` create this directory for deploy mode.
+- Generated tar file has version number from `git describe`.
 
-모든 하위 빌드 작업.
-libminds : protobuf, libminds, grpc
-libdb : hazelcast-cpp-client, cassadra-cpp-driver
-stt : minds-stt
-따 : 마음 - 타
-maum : maum 서버, 웹 콘솔, 웹 레스트
-web-had은 자동으로 생성되지 않습니다.
-빌드 모드
-필요한 작업을 빌드합니다.
-모든 내장 출력을 대상 디렉토리에 설치합니다. 기본 대상 디렉토리는 ~/minds입니다.
-대상 디렉토리에 필요한 모든 자원을 설치합니다.
-./build.sh ~ / 마음 전체
-./build.sh ~ / minds maum
-./build.sh ~ / minds libminds stt
-배포 모드
-배포 빌드를위한 임시 디렉토리를 만듭니다.
-필수 패키지를 빌드합니다.
-stt, ta 자원을 제외한 모든 바이너리와 자원을 설치합니다.
-소스 루트 디렉토리에 .tar.gz파일을 생성 합니다 out.
-./build.sh tar
-./build.sh tar ta-only
-./build.sh tar stt-only
-다른 통신
-./build.sh clean-deploy
-./build.sh clean-cache
-내부 build.sh
+#### cmake
+- Use 2.8.12 above.
+- In centos, use `cmake3` not `cmake`.
 
-~ / .minds-build
-cache:이 디렉토리에는 몇 가지 미리 만들어진 결과가 있습니다. protobuf, grpc, hazelcast-cpp-client, cassandra-cpp-driver에 대한 이전 외부 빌드 출력을 컴파일러 버전으로 캐시합니다.
-*.done: prerequisite.sh가 모든 종속성을 성공적으로 설치하면,이 파일은 해당 스크립트에 대해 주어진 sha1 해시로 생성됩니다.
-build-debug: cmake개발 모드에서이 디렉토리를 만듭니다.
-build-deploy-debug: cmake배포 모드에 대해이 디렉토리를 만듭니다.
-생성 된 tar 파일의 버전 번호가 있습니다 git describe.
-인사
+It use the following options.
 
-위의 2.8.12를 사용하십시오.
-centos에서는 사용 cmake3하지 마십시오 cmake.
-다음 옵션을 사용합니다.
+- DCMAKE_INSTALL_PREFIX=${MINDS_ROOT}
+- DCMAKE_BUILD_TYPE=Debug
+- DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/g++-4.8
+- DCMAKE_C_COMPILER:FILEPATH=/usr/bin/gcc-4.8
 
-DCMAKE_INSTALL_PREFIX = $ {MINDS_ROOT}
-DCMAKE_BUILD_TYPE = 디버그
-DCMAKE_CXX_COMPILER : FILEPATH = / usr / bin / g ++ - 4.8
-DCMAKE_C_COMPILER : FILEPATH = / usr / bin / gcc-4.8
-centos에서 /usr/bin/g++버전은 4.8.5입니다.
+In centos, `/usr/bin/g++` version is 4.8.5.
 
-특별 옵션을위한 맞춤 빌드.
+### Custom build for special options.
+Maum has several preprocessors to build special outputs.
 
-Maum은 특별한 출력을 만들기 위해 몇 가지 전처리기를 가지고 있습니다.
+- for audio file storing
+  ```bash
+  mkdir ~/git/maum/build-debug-record
+  cd ~/git/maum/build-debug-record
+  cmake \
+    -DCMAKE_INSTALL_PREFIX=${MINDS_ROOT} \
+    -DCMAKE_BUILD_TYPE=Debug \
+    -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/g++-4.8 \
+    -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/gcc-4.8 \
+    -DDEFINE_RECORD_AUDIO=ON \
+    ..
+  ```
 
-오디오 파일 저장 용
+- Use `alias.root`
 
-mkdir ~ / git / maum / build-debug-record
- cd  ~ / git / maum / build-debug-record
-cmake \
-  -DCMAKE_INSTALL_PREFIX = $ {MINDS_ROOT} \
-  -DCMAKE_BUILD_TYPE = 디버그 \
-  -DCMAKE_CXX_COMPILER : FILEPATH = / usr / bin / g ++ - 4.8 \
-  -DCMAKE_C_COMPILER : FILEPATH = / usr / bin / gcc-4.8 \
-  -DDEFINE_RECORD_AUDIO = ON \
-  ..
-용도 alias.root
+```bash
+git config --global --add alias.root '!pwd'
+make -C $(git root)/build-debug install
+```
 
-설정 --global --add alias.root를 이눔 ' ! pwd을 ' 
--C 수 있도록 $ ( 자식 루트 ) / 빌드 디버그를 설치
-CLion은 디버그 빌드 디렉토리를 만듭니다. 그걸 써.
-고토 Settings > Build, Execution, Deployment > CMake설정한다.
-cmake 옵션을 추가하십시오.
-  -DCMAKE_INSTALL_PREFIX = $ {MINDS_ROOT}
-  -DCMAKE_CXX_COMPILER : FILEPATH = / usr / bin / g ++ - 4.8
-  -DCMAKE_C_COMPILER : FILEPATH = / usr / bin / gcc-4.8
--C $ ( git root ) / cmake-build-debug install을 만든다.
-개발 도구, 테스트
+- CLion create debug build directory. Use it.
+  - Goto `Settings > Build, Execution, Deployment > CMake` in settings.
+  - Add cmake options.
+  ```bash
+    -DCMAKE_INSTALL_PREFIX=${MINDS_ROOT}
+    -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/g++-4.8
+    -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/gcc-4.8
+  ```
+    
+```bash
+make -C $(git root)/cmake-build-debug install
+```
 
-개발 ~/minds시 기본 설치 디렉토리입니다. 빌드 된 바이너리와 라이브러리를 처리하는 것이 더 편리합니다.
+## Development tools, Testing
 
-설정
+In development, `~/minds` is the default installation directory.
+It is more convenient to handle built binaries and libraries.
 
-export MINDS_ROOT = ~ / minds
- export LD_LIBRARY_PATH = $ LD_LIBRARY_PATH : $ {MINDS_ROOT} / lib
- export PATH = $ PATH : $ {MINDS_ROOT} / bin :
-CDPATH = ~ / minds : ~ / git / maum : .. :. # maum 경로는 개인 설정으로 변경할 수 있습니다.
-cd logs # ~ / minds / logs에서 
-빠져 나옵니다. cd bin
-용도 mindset
+### Settings
+```bash
+export MINDS_ROOT=~/minds
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${MINDS_ROOT}/lib
+export PATH=$PATH:${MINDS_ROOT}/bin:
+CDPATH=~/minds:~/git/maum:..:. # maum path is can be changed by personal setting.
+```
 
-사고 방식 발전기
-사고 방식
-항상 모든 구성 파일을 생성합니다.
+```bash
+cd logs # it will drop you at ~/minds/logs
+cd bin
+```
 
-시스템 사용
+### Use `mindset`
 
-서버를 실행할 스크립트
+```bash
+mindset gen dev
+mindset gen prod
+```
 
-sudo $ {MINDS_ROOT} / bin / mindset systemd
+It generates all configuration files always.
+
+### Use systemd
+
+### Scripts to run server
+
+```bash
+sudo ${MINDS_ROOT}/bin/mindset systemd 
 
 sudo sytemctl daemon-reload
 sudo systemctl start minds.target
-sudo systemctl list-units 마음 *
+sudo systemctl list-units minds*
 sudo systemctl restart minds.target
 sudo systemctl stop minds.target
 sudo systemctl enable minds.target
 sudo systemctl disable minds.target
-Docker 수동 시작
+```
 
-도커 설치
+### Start Docker manually
 
+#### docker install
+```
 sudo apt-get install docker.io
 sudo usermod -aG docker $USER
-Hazelcast 고정 컨테이너
+```
 
+#### Hazelcast docker container
+```bash
 sudo apt-get install openjdk-8-jdk
-도커가 헤이즐 캐스팅 / 헤이즐 캐스팅
-도커 실행 -p 5701 : 5701 -ti hazelcast / hazelcast
-카산드라 도커 컨테이너
+docker pull hazelcast/hazelcast
+docker run -p 5701:5701 -ti hazelcast/hazelcast
+```
 
-테스트 -d $ {MINDS_ROOT} / db | mkdir -p   $ {MINDS_ROOT} / db
-도커 실행 - 이름 cassandra \
- -p 9042 : 9042 \
- -v $ {MINDS_ROOT} / db : / var / lib / cassandra \
- -d cassandra : 최신
-대화 상자 에이전트 테스트를위한 파이썬 라이브러리 의존성.
+#### Cassandra docker container
+```bash
+test -d ${MINDS_ROOT}/db | mkdir -p  ${MINDS_ROOT}/db
+docker run --name cassandra  \
+ -p 9042:9042 \
+ -v ${MINDS_ROOT}/db:/var/lib/cassandra \
+ -d cassandra:latest
+```
 
-sudo pip 설치 pymysql
+### python library dependency for dialog agent testing.
+```bash
+sudo pip install pymysql
+```
